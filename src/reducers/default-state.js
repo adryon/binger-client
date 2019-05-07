@@ -39,6 +39,7 @@ export default {
     searchData: {}
   },
   movies: {
-    searchData: {}
+    searchData: {},
+    viewMovie: null,
   }
 };

@@ -2,7 +2,8 @@ import defaultState from './default-state';
 import {
   MOVIES_SEARCH,
   MOVIES_SEARCH_SUCCESS,
-  MOVIES_SEARCH_CLEAR
+  MOVIES_SEARCH_CLEAR,
+  MOVIES_GET_DETAILS_SUCCESS
 } from './../actions/actions-types';
 
 import config from './../lib/config';
@@ -22,6 +23,11 @@ export default function userState(state = defaultState.movies, action) {
     case MOVIES_SEARCH_CLEAR:
       return Object.assign({}, state, {
         searchData: []
+      })
+
+    case MOVIES_GET_DETAILS_SUCCESS:
+      return Object.assign({}, state, {
+        viewMovie: action.data
       })
 
     default:
