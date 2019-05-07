@@ -31,8 +31,7 @@ class Wishlist extends React.Component {
     value.length > 2 ? this.props.moviesSearch(value) : this.props.moviesSearchClear()
   }
 
-  addToWishlist = (item, event) => {
-    console.log(event);
+  addTVSeriesToWishlist = (item, event) => {
     const payload = {
       id: item.id,
       backdrop_path: item.backdrop_path,
@@ -41,8 +40,21 @@ class Wishlist extends React.Component {
     this.props.tvSeriesAddToWishList(payload, this.props.user.data.uid);
   }
 
-  deleteItemFromWishlist = item => {
-    this.props.deleteItemFromWishlist(item, this.props.user.data.uid);
+  addMovieToWishlist = (item, event) => {
+    const payload = {
+      id: item.id,
+      backdrop_path: item.backdrop_path,
+      title: item.title,
+    }
+    this.props.moviesAddToWishList(payload, this.props.user.data.uid);
+  }
+
+  deleteTVSeriesFromWishlist = item => {
+    this.props.deleteTVSeriesFromWishlist(item, this.props.user.data.uid);
+  }
+
+  deleteMovieFromWishlist = item => {
+    this.props.deleteMovieFromWishlist(item, this.props.user.data.uid);
   }
 
   componentDidMount() {
@@ -53,7 +65,6 @@ class Wishlist extends React.Component {
   isAlreadyInWishlist(item, type) {
     let isInWishlist = false;
     if (type === 'movie') {
-      console.log(this.props.user);
       this.props.user.moviesWishlist.map(movie => {
         if (movie.id === item.id) {
           isInWishlist = true;
@@ -88,7 +99,7 @@ class Wishlist extends React.Component {
             <div className="row m-2">
               {this.isAlreadyInWishlist(item, 'tvSeries')?
                 <Button type="primary" className="ant-btn-small btn-success" >Added to Wishlist</Button> : 
-                <Button type="primary" className="ant-btn-small" onClick={(event) => this.addToWishlist(item, event)}>Add to Wishlist</Button>
+                <Button type="primary" className="ant-btn-small" onClick={(event) => this.addTVSeriesToWishlist(item, event)}>Add to Wishlist</Button>
               }
             </div>
           </div>
@@ -113,7 +124,7 @@ class Wishlist extends React.Component {
             <div className="row m-2">
               {this.isAlreadyInWishlist(item, 'movie')?
                 <Button type="primary" className="ant-btn-small btn-success" >Added to Wishlist</Button> : 
-                <Button type="primary" className="ant-btn-small" onClick={(event) => this.addToWishlist(item, event)}>Add to Wishlist</Button>
+                <Button type="primary" className="ant-btn-small" onClick={(event) => this.addMovieToWishlist(item, event)}>Add to Wishlist</Button>
               }
             </div>
           </div>
@@ -151,8 +162,8 @@ class Wishlist extends React.Component {
                                   type="primary" 
                                   className="ant-btn-medium btn-danger" 
                                   icon="delete"
-                                  onClick={() => this.deleteItemFromWishlist(item)} ></Button>]}>
-                      <h3>{item.name}</h3>
+                                  onClick={() => this.deleteTVSeriesFromWishlist(item)} ></Button>]}>
+                      <h3 className="ant-list-item-content">{item.name}</h3>
                     </List.Item>
                   )}
                 />
@@ -168,6 +179,21 @@ class Wishlist extends React.Component {
                   placeholder="Search Movies"
                 />
               </AutoComplete>
+
+              <List
+                  dataSource={this.props.user.moviesWishlist}
+                  renderItem={item => (
+                    <List.Item 
+                      key={item.id}
+                      actions={[<Button 
+                                  type="primary" 
+                                  className="ant-btn-medium btn-danger" 
+                                  icon="delete"
+                                  onClick={() => this.deleteMovieFromWishlist(item)} ></Button>]}>
+                      <h3 className="ant-list-item-content">{item.title}</h3>
+                    </List.Item>
+                  )}
+                />
             </div>
           </div>
         </div>
@@ -179,12 +205,16 @@ class Wishlist extends React.Component {
 const mapDispatchToProps = {
   getTVSeriesWishlist: userActions.getTVSeriesWishlist,
   getMoviesWishlist: userActions.getMoviesWishlist,
+
   tvSeriesSearch: tvSeriesActions.tvSeriesSearch,
   tvSeriesSearchClear: tvSeriesActions.tvSeriesSearchClear,
   tvSeriesAddToWishList: tvSeriesActions.tvSeriesAddToWishList,
-  deleteItemFromWishlist: userActions.deleteItemFromWishlist,
+  deleteTVSeriesFromWishlist: userActions.deleteTVSeriesFromWishlist,
+  
   moviesSearch: moviesActions.moviesSearch,
   moviesSearchClear: moviesActions.moviesSearchClear,
+  moviesAddToWishList: moviesActions.moviesAddToWishList,
+  deleteMovieFromWishlist: userActions.deleteMovieFromWishlist,
 };
 
 function mapStateToProps(state) {

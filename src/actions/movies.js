@@ -46,12 +46,12 @@ export function moviesSearch(searchTerm) {
 
 export function moviesAddToWishList(payload, uid) {
   return function(dispatch) {
-    firebase.database().ref(`users/${uid}/tvSeriesWishlist`).push(payload);
+    firebase.database().ref(`users/${uid}/moviesWishlist`).push(payload);
     notification.open({
       type: 'success',
       className: 'success',
-      message: 'TV Series added to wishlist!',
-      description: `You have succesfully added ${payload.name} to your wishlist!`,
+      message: 'Movie added to wishlist!',
+      description: `You have succesfully added ${payload.title} to your wishlist!`,
     })
   }
 }

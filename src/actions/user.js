@@ -143,7 +143,7 @@ export function getMoviesWishlist() {
   }
 }
 
-export function deleteItemFromWishlist(payload, uid) {
+export function deleteTVSeriesFromWishlist(payload, uid) {
   return function(dispatch) {
     firebase.database().ref(`users/${uid}/tvSeriesWishlist/${payload.uid}`).remove();
     notification.open({
@@ -151,6 +151,18 @@ export function deleteItemFromWishlist(payload, uid) {
       className: 'success',
       message: 'TV Series deleted from wishlist!',
       description: `You have succesfully deleted ${payload.name} from your wishlist!`,
+    })
+  }
+}
+
+export function deleteMovieFromWishlist(payload, uid) {
+  return function(dispatch) {
+    firebase.database().ref(`users/${uid}/moviesWishlist/${payload.uid}`).remove();
+    notification.open({
+      type: 'success',
+      className: 'success',
+      message: 'Movie deleted from wishlist!',
+      description: `You have succesfully deleted ${payload.title} from your wishlist!`,
     })
   }
 }
