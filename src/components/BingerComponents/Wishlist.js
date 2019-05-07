@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {push} from 'react-router-redux'
 import {Button, List, Divider, Input, Icon, AutoComplete} from 'antd'
 import { userActions, tvSeriesActions, moviesActions } from 'actions';
 import moment from 'moment';
@@ -57,11 +58,6 @@ class Wishlist extends React.Component {
     this.props.deleteMovieFromWishlist(item, this.props.user.data.uid);
   }
 
-  componentDidMount() {
-    this.props.getTVSeriesWishlist();
-    this.props.getMoviesWishlist();
-  }
-
   isAlreadyInWishlist(item, type) {
     let isInWishlist = false;
     if (type === 'movie') {
@@ -80,6 +76,19 @@ class Wishlist extends React.Component {
     return isInWishlist;
   }
 
+  goToMovie = item => {
+    this.props.goToMovie(item.id);
+  }
+
+  goToTVSeries = item => {
+    this.props.goToTVSeries(item.id);
+  }
+
+  componentDidMount() {
+    this.props.getTVSeriesWishlist();
+    this.props.getMoviesWishlist();
+  }
+
   render() {
 
     const tvSeriesDataSource = this.props.tvSeries && this.props.tvSeries.searchData && this.props.tvSeries.searchData.results? 
@@ -90,7 +99,7 @@ class Wishlist extends React.Component {
       >
         <div className="row">
           <div className="col-lg-3">
-            <img src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.poster_path}`} height="100" width="67"/>
+            <img src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.poster_path}`} alt="" height="100" width="67"/>
           </div>
           <div className="col-lg-9">
             <div className="row m-2">
@@ -115,7 +124,7 @@ class Wishlist extends React.Component {
       >
         <div className="row">
           <div className="col-lg-3">
-            <img src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.poster_path}`} height="100" width="67"/>
+            <img src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${item.poster_path}`} alt="" height="100" width="67"/>
           </div>
           <div className="col-lg-9">
             <div className="row m-2">
@@ -163,7 +172,9 @@ class Wishlist extends React.Component {
                                   className="ant-btn-medium btn-danger" 
                                   icon="delete"
                                   onClick={() => this.deleteTVSeriesFromWishlist(item)} ></Button>]}>
-                      <h3 className="ant-list-item-content">{item.name}</h3>
+                      <a onClick={() => this.goToTVSeries(item)}>
+                        <h3 className="ant-list-item-content">{item.name}</h3>
+                      </a>
                     </List.Item>
                   )}
                 />
@@ -190,7 +201,9 @@ class Wishlist extends React.Component {
                                   className="ant-btn-medium btn-danger" 
                                   icon="delete"
                                   onClick={() => this.deleteMovieFromWishlist(item)} ></Button>]}>
-                      <h3 className="ant-list-item-content">{item.title}</h3>
+                      <a onClick={() => this.goToMovie(item)}>
+                        <h3 className="ant-list-item-content">{item.title}</h3>
+                      </a>
                     </List.Item>
                   )}
                 />
@@ -215,6 +228,9 @@ const mapDispatchToProps = {
   moviesSearchClear: moviesActions.moviesSearchClear,
   moviesAddToWishList: moviesActions.moviesAddToWishList,
   deleteMovieFromWishlist: userActions.deleteMovieFromWishlist,
+
+  goToMovie: (id) => dispatch => dispatch(push(`/movie/${id}`)),
+  goToTVSeries: (id) => dispatch => dispatch(push(`/tv/${id}`)),
 };
 
 function mapStateToProps(state) {

@@ -25,6 +25,12 @@ const loadableRoutes = {
   },
   '/dashboard': {
     component: loadable(() => import('pages/DashboardPage')),
+  },
+  '/tv/:id': {
+    component: loadable(() => import('pages/TVSeriesPage')),
+  },
+  '/movie/:id': {
+    component: loadable(() => import('pages/MoviePage')),
   }
 }
 

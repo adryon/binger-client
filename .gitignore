@@ -22,3 +22,5 @@ yarn-lock.log*
 yarn.lock*
 /src/**/*.css
 package-lock.json*
+binger-client.sublime-project
+binger-client.sublime-workspace
