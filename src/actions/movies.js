@@ -70,7 +70,6 @@ export function getMovieDetails(movie_id) {
 
     return http.get(`movie/${movie_id}`, payload)
       .then(result => {
-
         dispatch(getMovieDetailsSuccess(result));
       })
       .catch(error => {
