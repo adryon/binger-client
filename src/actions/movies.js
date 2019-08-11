@@ -8,6 +8,7 @@ import http from './../lib/axios-wrapper';
 import {notification} from 'antd';
 import {push} from 'react-router-redux';
 import firebase from 'firebase';
+import lockr from 'lockr';
 import config from '../lib/config';
 
 export function moviesSearchSuccess(data) {
@@ -61,7 +62,7 @@ export function moviesAddToWishList(payload, uid) {
   }
 }
 
-export function getMovieDetails(movie_id) {
+export function getMovieDetails(movie_id, user_id) {
   return function(dispatch) {
     const payload = {
       api_key: config.THE_MOVIE_DB_TOKEN,
@@ -70,7 +71,10 @@ export function getMovieDetails(movie_id) {
 
     return http.get(`movie/${movie_id}`, payload)
       .then(result => {
-        dispatch(getMovieDetailsSuccess(result));
+        firebase.database().ref(`users/${lockr.get('Authorization')}/movies/${movie_id}`).once('value').then(snapshot => {
+          const movieData = Object.assign({}, snapshot.val(), result);
+          dispatch(getMovieDetailsSuccess(movieData));
+        });
       })
       .catch(error => {
         notification.open({

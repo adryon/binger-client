@@ -23,7 +23,6 @@ class MoviePage extends React.Component {
 
   render() {
     const { viewMovie } = this.props.movies;
-    console.log(viewMovie);
     return ( viewMovie &&
       <Page>
         <Helmet title="Movie" />
@@ -38,24 +37,48 @@ class MoviePage extends React.Component {
                 <span>{moment(viewMovie.release_date).format('YYYY')}</span>
               </div>
               <div className="row">
-                <Button
-                  type="primary"
-                  className="mr-4"
-                >
-                  <Icon type="heart" theme="filled" />
-                </Button>
-                <Button
-                  type="primary"
-                  className="mr-4"
-                >
-                  Watched
-                </Button>
-                <Button
-                  type="primary"
-                  className="mr-4"
-                >
-                  Add to Wishlist
-                </Button>
+                {viewMovie.isFavourite &&
+                  <Button
+                    type="primary"
+                    className="mr-4 btn-is-favourite"
+                  >
+                    <Icon type="heart" theme="filled" />
+                  </Button> ||
+                  <Button
+                    type="primary"
+                    className="mr-4 btn-is-not-favourite"
+                  >
+                    <Icon type="heart" theme="filled" />
+                  </Button>
+                }
+                {viewMovie.isWatched &&
+                  <Button
+                    type="primary"
+                    className="mr-4 btn-watched"
+                  >
+                    Watched
+                  </Button> ||
+                  <Button
+                    type="primary"
+                    className="mr-4 btn-not-watched"
+                  >
+                    Not watched
+                  </Button>
+                }
+                {viewMovie.isAddedToWishlist &&
+                  <Button
+                    type="primary"
+                    className="mr-4 btn-added-in-wishlist"
+                  >
+                    Watched
+                  </Button> ||
+                  <Button
+                    type="primary"
+                    className="mr-4 btn-add-to-wishlist"
+                  >
+                    Add to Wishlist
+                  </Button>
+                }
                 <span> You've already watched this movie on 28/07/2012</span>
               </div>
               <div className="row">

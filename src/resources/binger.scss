@@ -96,6 +96,58 @@
   }
 }
 
+.btn-is-favourite {
+  background-color: $green-color;
+  color: $white;
+  border: none;
+  border-radius: 50%;
+
+  &:hover, &:active, &:focus {
+    background-color: $green-color-darken;
+    color: $white;
+    border: none;
+    border-radius: 50%;
+  }
+}
+
+.btn-is-favourite {
+  background-color: $red-color;
+  color: $white;
+  border: none;
+  border-radius: 50%;
+
+  &:hover, &:active, &:focus {
+    background-color: $red-color-darken;
+    color: $white;
+    border: none;
+    border-radius: 50%;
+  }
+}
+
+.btn-watched {
+  background-color: $green-color;
+  border: none;
+
+  &:hover, &:active, &:focus {
+    background-color: $green-color-darken;
+    border: none;
+  }
+}
+
+.btn-not-watched {
+  background-color: $blue-color;
+  border: none;
+
+  &:hover, &:active, &:focus {
+    background-color: $blue-color-darken;
+    border: none;
+  }
+}
+
+.btn-add-to-wishlist {
+  border: none;
+}
+
 .btn-first-tv-show {
   border-color: $primary-color;
   color: $primary-color;
