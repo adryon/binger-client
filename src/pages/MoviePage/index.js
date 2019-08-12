@@ -5,7 +5,7 @@ import moment from 'moment';
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 import { moviesActions } from 'actions'
-import { Layout, Button, Icon } from 'antd';
+import { Layout, Button, Icon, Tag } from 'antd';
 
 const {
   Header, Footer, Sider, Content,
@@ -26,21 +26,28 @@ class MoviePage extends React.Component {
     return ( viewMovie &&
       <Page>
         <Helmet title="Movie" />
-        <div className="container">
+        <div className="">
           <div className="row">
-            <div className="col-lg-4">
-              <img src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${viewMovie.poster_path}`} alt=""/>
+            <div className="col-lg-3">
+              <div className="align-end">
+                <img className="movie-poster" src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${viewMovie.poster_path}`} alt=""/>
+              </div>
             </div>
-            <div className="col-lg-8">
+            <div className="col-lg-9">
               <div className="row">
-                <span>{viewMovie.original_title}</span>
-                <span>{moment(viewMovie.release_date).format('YYYY')}</span>
+                <div className="movie-title">
+                  {viewMovie.original_title}
+                </div>
+                {/*<Button
+                    type="primary"
+                    className="mr-4"
+                  >{moment(viewMovie.release_date).format('YYYY')}</Button>*/}
               </div>
               <div className="row">
                 {viewMovie.isFavourite &&
                   <Button
                     type="primary"
-                    className="mr-4 btn-is-favourite"
+                    className="btn-is-favourite"
                   >
                     <Icon type="heart" theme="filled" />
                   </Button> ||
@@ -82,7 +89,14 @@ class MoviePage extends React.Component {
                 <span> You've already watched this movie on 28/07/2012</span>
               </div>
               <div className="row">
-
+                <div className="col-lg-12">
+                  <div className="card movie-tags-section">
+                    <div className="card-body">
+                      <span className="movie-tags-paragraph">Tags</span>
+                      <div className="movie-tags-list"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
