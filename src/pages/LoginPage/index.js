@@ -15,12 +15,13 @@ class LoginPage extends React.Component {
   onSubmit = (isSubmitForm: ?boolean) => event => {
     event.preventDefault()
     const { form } = this.props
-    form.validateFields((error, values) => {
+    console.log(form.validateFields);
+    /*form.validateFields((error, values) => {
       if (!error) {
       	const payload = _.pick(values, ['email', 'password']);
         this.props.login(payload);
       }
-    })
+    })*/
   };
 
 	componentDidMount() {
